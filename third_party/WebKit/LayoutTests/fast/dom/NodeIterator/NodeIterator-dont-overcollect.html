@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="../../../resources/js-test.js"></script>
+<script>
+    var callbackWasTriggered = false;
+
+    var callback = function(node) {
+        callbackWasTriggered = true;
+        return NodeFilter.FILTER_ACCEPT;
+    };
+    var nodeIterator = document.createNodeIterator(document, NodeFilter.SHOW_ELEMENT, callback, false);
+
+    // Do not pass the object as a parameter to observeGC function. This may
+    // remain live on this function's stack preventing GC from collecting
+    // it. Accessing the object inside an inner function will prevent any
+    // unneeded references on this function's stack.
+    var callbackObservation = internals.observeGC((() => {return callback;})());
+    callback = null;
+    var nodeFilterObservation = internals.observeGC((() => {return nodeIterator.filter;})());
+    var nodeIteratorObservation = internals.observeGC((() => {return nodeIterator;})());
+
+    gc();
+    shouldBeFalse('nodeFilterObservation.wasCollected');
+    shouldBeFalse('callbackObservation.wasCollected');
+
+    nodeIterator.nextNode();
+    shouldBeTrue('callbackWasTriggered');
+
+    nodeIterator = null;
+    gc();
+    shouldBeTrue('nodeIteratorObservation.wasCollected');
+    shouldBeTrue('nodeFilterObservation.wasCollected');
+    shouldBeTrue('callbackObservation.wasCollected');
+</script>
+</body>
+</html>
