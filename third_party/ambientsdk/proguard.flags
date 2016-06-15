@@ -1,0 +1,2 @@
+-keep public class com.cyanogen.ambient.* { public *; }
+-dontwarn com.cyanogen.ambient.**
