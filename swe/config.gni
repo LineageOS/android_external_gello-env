@@ -31,13 +31,14 @@ import("//components/web_refiner/web_refiner_vars.gni")
 
 declare_args() {
   swe_branding_path_component = ""
-  swe_prop_resources_dirs = []
   swe_resources_zip = []
 }
 
+swe_prop_res_dirs = []
+
 # add web refiner
 if (defined(web_refiner_resource_dirs)) {
-  swe_prop_resources_dirs += web_refiner_resource_dirs
+  swe_prop_res_dirs += web_refiner_resource_dirs
 }
 
 swe_branding_path_component =  exec_script("//swe/tools/swe_channels_dirs.py",
@@ -54,8 +55,6 @@ swe_extra_dirs = exec_script("//swe/tools/swe_channels_dirs.py",
                 [ "--swe-channels", swe_channels, "-d",
                   rebase_path("//", root_build_dir), "--channel-res-folder"],
                   "list lines")
-
-swe_extra_dirs += swe_prop_resources_dirs
 
 swe_extra_dirs += ["java/res_swe"]
 
