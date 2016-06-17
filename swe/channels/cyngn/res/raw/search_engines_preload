@@ -1,0 +1,219 @@
+{
+	"version": "1.0",
+	"default": 0,
+	"searchEngines": 
+	[
+		{
+			"name": "Yahoo!",
+			"keyword": "yahoo.com",
+			"faviconUrl": "http://search.yahoo.com/favicon.ico",
+			"partnerCodeKey": "search_code_yahoo",
+			"defaultPartnerCode": "cya_oem",
+			"searchUrl": "http://search.yahoo.com/mobile/s?p={searchTerms}&.tsrc={partnerCode}",
+			"encoding": "UTF-8",
+			"suggestUri": "https://search.yahoo.com/gossip?output=fxjson&command={searchTerms}&.tsrc={partnerCode}"
+		},
+		{
+			"name": "Bing",
+			"keyword": "bing.com",
+			"faviconUrl": "http://www.bing.com/s/wlflag.ico",
+			"partnerCodeKey": "search_code_bing",
+			"defaultPartnerCode": "CY01",
+			"searchUrl": "http://www.bing.com/search?FORM=CYANDF&PC={partnerCode}&q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "http://api.bing.com/osjson.aspx?FORM=CYANDF&PC={partnerCode}&query={searchTerms}&language={language}"
+		},
+		{
+			"name": "DuckDuckGo", 
+			"keyword": "duckduckgo.com",
+			"faviconUrl": "http://duckduckgo.com/favicon.ico",
+			"searchUrl": "https://duckduckgo.com/?q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "Rambler", 
+			"keyword": "rambler.ru",
+			"faviconUrl": "http://www.rambler.ru/favicon.ico",
+			"searchUrl": "http://www.rambler.ru/srch?words={searchTerms}",
+			"encoding": "windows-1251",
+			"suggestUri": ""
+		},
+		{
+			"name": "&#xb124;&#xc774;&#xd2b8;&#xb2f7;&#xcef4;", 
+			"keyword": "nate.com",
+			"faviconUrl": "http://nate.search.empas.com/favicon.ico",
+			"searchUrl": "http://nate.search.empas.com/search/all.html?q={searchTerms}",
+			"encoding": "EUC-KR",
+			"suggestUri": ""
+		},
+		{
+			"name": "UOL Busca", 
+			"keyword": "busca.uol.com.br",
+			"faviconUrl": "http://busca.uol.com.br/favicon.ico",
+			"searchUrl": "http://busca.uol.com.br/www/index.html?q={searchTerms}",
+			"encoding": "ISO-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "Baidu", 
+			"keyword": "baidu.com",
+			"faviconUrl": "http://www.baidu.com/favicon.ico",
+			"searchUrl": "http://www.baidu.com/s?wd={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "Onet.pl", 
+			"keyword": "onet.pl",
+			"faviconUrl": "http://szukaj.onet.pl/favicon.ico",
+			"searchUrl": "http://szukaj.onet.pl/query.html?qt={searchTerms}",
+			"encoding": "ISO-8859-2",
+			"suggestUri": ""
+		},
+		{
+			"name": "hispavista", 
+			"keyword": "hispavista.com",
+			"faviconUrl": "http://buscar.hispavista.com/favicon.ico",
+			"searchUrl": "http://buscar.hispavista.com/?cadena={searchTerms}",
+			"encoding": "iso-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "Google", 
+			"keyword": "google.com",
+			"faviconUrl": "https://www.google.com/favicon.ico",
+			"searchUrl": "https://www.google.com/search?ie={inputEncoding}&source=android-browser&q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "https://www.google.com/complete/search?client=android&q={searchTerms}"
+		},
+		{
+			"name": "Rednano", 
+			"keyword": "rednano.sg",
+			"faviconUrl": "http://rednano.sg/favicon.ico",
+			"searchUrl": "http://rednano.sg/sfe/lwi.action?querystring={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "goo", 
+			"keyword": "search.goo.ne.jp",
+			"faviconUrl": "http://goo.ne.jp/favicon.ico",
+			"searchUrl": "http://search.goo.ne.jp/web.jsp?MT={searchTerms}&IE={inputEncoding}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "SAPO", 
+			"keyword": "sapo.pt",
+			"faviconUrl": "http://imgs.sapo.pt/images/sapo.ico",
+			"searchUrl": "http://pesquisa.sapo.pt/?q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "http://pesquisa.sapo.pt/livesapo?q={searchTerms}"
+		},
+		{
+			"name": "ABC S&#x00f8;k", 
+			"keyword": "abcsok.no",
+			"faviconUrl": "http://abcsok.no/favicon.ico",
+			"searchUrl": "http://abcsok.no/index.html?q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "TUT.BY", 
+			"keyword": "tut.by",
+			"faviconUrl": "http://www.tut.by/favicon.ico",
+			"searchUrl": "http://search.tut.by/?query={searchTerms}",
+			"encoding": "windows-1251",
+			"suggestUri": ""
+		},
+		{
+			"name": "Spray", 
+			"keyword": "spray.se",
+			"faviconUrl": "http://www.eniro.se/favicon.ico",
+			"searchUrl": "http://www.eniro.se/query?ax=spray&search_word={searchTerms}&what=web",
+			"encoding": "ISO-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "Wirtualna Polska", 
+			"keyword": "wp.pl",
+			"faviconUrl": "http://szukaj.wp.pl/favicon.ico",
+			"searchUrl": "http://szukaj.wp.pl/szukaj.html?szukaj={searchTerms}",
+			"encoding": "ISO-8859-2",
+			"suggestUri": ""
+		},
+		{
+			"name": "Libero", 
+			"keyword": "libero.it",
+			"faviconUrl": "http://arianna.libero.it/favicon.ico",
+			"searchUrl": "http://arianna.libero.it/search/abin/integrata.cgi?query={searchTerms}",
+			"encoding": "ISO-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "Daum", 
+			"keyword": "daum.net",
+			"faviconUrl": "http://search.daum.net/favicon.ico",
+			"searchUrl": "http://search.daum.net/search?q={searchTerms}",
+			"encoding": "EUC-KR",
+			"suggestUri": "http://sug.search.daum.net/search_nsuggest?mod=fxjson&q={searchTerms}"
+		},
+		{
+			"name": "Seznam", 
+			"keyword": "seznam.cz",
+			"faviconUrl": "http://1.im.cz/szn/img/favicon.ico",
+			"searchUrl": "http://search.seznam.cz/?q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "http://suggest.fulltext.seznam.cz/?dict=fulltext_ff&phrase={searchTerms}&encoding={inputEncoding}&response_encoding=utf-8"
+		},
+		{
+			"name": "Kvasir", 
+			"keyword": "kvasir.no",
+			"faviconUrl": "http://www.kvasir.no/img/favicon.ico",
+			"searchUrl": "http://www.kvasir.no/nettsok/searchResult.html?searchExpr={searchTerms}",
+			"encoding": "ISO-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "in.gr", 
+			"keyword": "in.gr",
+			"faviconUrl": "http://www.in.gr/favicon.ico",
+			"searchUrl": "http://find.in.gr/?qs={searchTerms}",
+			"encoding": "ISO-8859-7",
+			"suggestUri": ""
+		},
+		{
+			"name": "MYNET", 
+			"keyword": "mynet.com",
+			"faviconUrl": "http://img.mynet.com/mynetfavori.ico",
+			"searchUrl": "http://arama.mynet.com/search.aspx?q={searchTerms}&pg=q",
+			"encoding": "windows-1254",
+			"suggestUri": ""
+		},
+		{
+			"name": "Virgilio", 
+			"keyword": "virgilio.it",
+			"faviconUrl": "http://ricerca.alice.it/favicon.ico",
+			"searchUrl": "http://ricerca.alice.it/ricerca?qs={searchTerms}",
+			"encoding": "ISO-8859-1",
+			"suggestUri": ""
+		},
+		{
+			"name": "NetSprint", 
+			"keyword": "netsprint.pl",
+			"faviconUrl": "http://netsprint.pl/favicon.ico",
+			"searchUrl": "http://www.netsprint.pl/serwis/search?q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "&#xb124;&#xc774;&#xbc84;", 
+			"keyword": "naver.com",
+			"faviconUrl": "http://search.naver.com/favicon.ico",
+			"searchUrl": "http://search.naver.com/search.naver?ie={inputEncoding}&query={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "http://ac.search.naver.com/autocompl?m=s&ie={inputEncoding}&oe=utf-8&q={searchTerms}"
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+    "version": "1.0",
+    "homePages": [{
+        "name": "yahoo",
+        "keyword": "yahoo.com",
+        "homePageUrl": "http://www.yahoo.com/?.tsrc={partnerCode}",
+		"faviconUrl": "http://search.yahoo.com/favicon.ico",
+		"partnerCodeKey": "search_code_yahoo",
+        "defaultPartnerCode": "cya_oem"
+        }, {
+        "name": "bing",
+        "keyword": "bing.com",
+        "homePageUrl": "http://www.bing.com/?PC={partnerCode}&FORM=CYANDF",
+		"faviconUrl": "http://www.bing.com/s/wlflag.ico",
+		"partnerCodeKey": "search_code_bing",
+        "defaultPartnerCode": "CY01"
+    }],
+    "default" : 0
+}
