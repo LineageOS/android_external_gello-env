@@ -72,6 +72,9 @@
     <integer name="disablebookmarksediting">0</integer>
     <integer name="disableincognitomode">0</integer>
     <integer name="enableexitonlasttab">0</integer>
+    <integer name="partnercustomizations_homepage_column_count">1</integer>
+    <integer name="partnercustomizations_homepage_url_col_idx">0</integer>
+    <integer name="partnercustomizations_homepage_default_col_idx">-1</integer>
 
     <!-- Prompt user to select WiFi access point or otherwise enable WLAN -->
     <bool name="swe_feature_network_notifier">false</bool>
