@@ -138,18 +138,38 @@ public class PartnerBrowserCustomizations {
 
             private void refreshHomepage() {
                 try {
+                    int homepageColumnCount = context.getResources().getInteger(
+                            R.integer.partnercustomizations_homepage_column_count);
+                    int homepageUrlColumnIdx = context.getResources().getInteger(
+                            R.integer.partnercustomizations_homepage_url_col_idx);
+                    int homepageDefaultColumnIdx = context.getResources().getInteger(
+                            R.integer.partnercustomizations_homepage_default_col_idx);
+
                     ContentResolver contentResolver = context.getContentResolver();
                     Cursor cursor = contentResolver.query(
                             buildQueryUri(PARTNER_HOMEPAGE_PATH, context),
                             null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1
+
+                    String url = null;
+                    if (cursor != null && cursor.getCount() > 0
+                            && cursor.getColumnCount() == homepageColumnCount
                             && !isCancelled()) {
-                        if (TextUtils.isEmpty(sHomepage)
-                                || !sHomepage.equals(cursor.getString(0))) {
-                            mHomepageUriChanged = true;
+                        while (cursor.moveToNext() && url == null) {
+                            boolean isDefault = true;
+                            if (homepageDefaultColumnIdx >= 0
+                                    && homepageDefaultColumnIdx < homepageColumnCount) {
+                                isDefault = cursor.getInt(homepageDefaultColumnIdx) == 1;
+                            }
+                            if (isDefault) {
+                                url = cursor.getString(homepageUrlColumnIdx);
+                            }
                         }
-                        sHomepage = cursor.getString(0);
                     }
+                    if (TextUtils.isEmpty(sHomepage)
+                            || !sHomepage.equals(url)) {
+                        mHomepageUriChanged = true;
+                    }
+                    sHomepage = url;
                     if (cursor != null) cursor.close();
                 } catch (Exception e) {
                     Log.w(TAG, "Partner homepage provider URL read failed : ", e);

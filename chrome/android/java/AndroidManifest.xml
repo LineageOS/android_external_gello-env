@@ -440,13 +440,6 @@ by a child template that "extends" this file.
             android:process=":browser_restart_process">
         </activity>
 
-        <!-- Providers for chrome data. -->
-        <provider android:name=
-            "org.codeaurora.swe.partnerbrowsercustomizations.BrowserCustomizationsProvider"
-            android:authorities="{{ manifest_package }}.partnerbrowsercustomizations"
-            android:exported="true">
-        </provider>
-
         <!-- Activity to list Physical Web Urls -->
         <activity android:name="org.chromium.chrome.browser.physicalweb.ListUrlsActivity"
             android:label="@string/physical_web_list_urls_activity_title"

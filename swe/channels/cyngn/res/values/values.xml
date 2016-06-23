@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Partner customization -->
+    <integer name="partnercustomizations_homepage_column_count">10</integer>
+    <integer name="partnercustomizations_homepage_url_col_idx">3</integer>
+    <integer name="partnercustomizations_homepage_default_col_idx">7</integer>
+</resources>
