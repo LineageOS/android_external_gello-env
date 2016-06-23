@@ -33,6 +33,7 @@ chrome_java_sources = [
   "java/src/org/codeaurora/swe/partnerbrowsercustomizations/DataUtil.java",
   "java/src/org/codeaurora/swe/WifiAccessPointCheckerUtil.java",
   "java/src/org/chromium/chrome/browser/partnercustomizations/PartnerSearchEngineManager.java",
+  "java/src/org/chromium/chrome/browser/partnercustomizations/PartnerCustomizationsContract.java",
   "java/src/org/codeaurora/swe/partnerbrowsercustomizations/SearchEngineParser.java",
   "java/src/org/codeaurora/swe/partnerbrowsercustomizations/TemplateUrl.java",
   "java/src/org/chromium/chrome/browser/download/MediaDownloadManager.java",

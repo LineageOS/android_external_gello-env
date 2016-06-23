@@ -142,14 +142,29 @@ public class PartnerBrowserCustomizations {
                     Cursor cursor = contentResolver.query(
                             buildQueryUri(PARTNER_HOMEPAGE_PATH, context),
                             null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1
+                    String url = null;
+                    if (cursor != null && cursor.getCount() > 0
+                            && cursor.getColumnCount() ==
+                                PartnerCustomizationsContract.HomePages.COLUMN_COUNT
                             && !isCancelled()) {
-                        if (TextUtils.isEmpty(sHomepage)
-                                || !sHomepage.equals(cursor.getString(0))) {
-                            mHomepageUriChanged = true;
+                        while (cursor.moveToNext() && url == null) {
+                            boolean isDefault = true;
+                            if (PartnerCustomizationsContract.HomePages.IS_DEFAULT >= 0
+                                    && PartnerCustomizationsContract.HomePages.IS_DEFAULT <
+                                       PartnerCustomizationsContract.HomePages.COLUMN_COUNT) {
+                                isDefault = cursor.getInt(PartnerCustomizationsContract
+                                        .HomePages.IS_DEFAULT) == 1;
+                            }
+                            if (isDefault) {
+                                url = cursor.getString(PartnerCustomizationsContract.HomePages.HOMEPAGE_URL);
+                            }
                         }
-                        sHomepage = cursor.getString(0);
                     }
+                    if (TextUtils.isEmpty(sHomepage)
+                            || !sHomepage.equals(url)) {
+                        mHomepageUriChanged = true;
+                    }
+                    sHomepage = url;
                     if (cursor != null) cursor.close();
                 } catch (Exception e) {
                     Log.w(TAG, "Partner homepage provider URL read failed : ", e);
@@ -332,6 +347,7 @@ public class PartnerBrowserCustomizations {
         if (commandLine.hasSwitch(ChromeSwitches.PARTNER_HOMEPAGE_FOR_TESTING)) {
             return commandLine.getSwitchValue(ChromeSwitches.PARTNER_HOMEPAGE_FOR_TESTING);
         }
+        Log.d("TEST", "homepage being returned: " + sHomepage);
         return sHomepage;
     }
 }
