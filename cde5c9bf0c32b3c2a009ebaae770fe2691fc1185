@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faad753_641f0d5b",
+        "filename": "swe/channels/cyngn/res/raw/search_engines_preload",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 848
+      },
+      "writtenOn": "2016-06-24T14:28:47Z",
+      "side": 1,
+      "message": "https://duckduckgo.com/?q\u003d{searchTerms}\u0026amp;t\u003dcyanogenmod",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "cde5c9bf0c32b3c2a009ebaae770fe2691fc1185",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
