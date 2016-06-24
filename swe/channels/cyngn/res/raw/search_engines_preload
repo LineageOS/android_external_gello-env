@@ -27,7 +27,9 @@
 			"name": "DuckDuckGo", 
 			"keyword": "duckduckgo.com",
 			"faviconUrl": "http://duckduckgo.com/favicon.ico",
-			"searchUrl": "https://duckduckgo.com/?q={searchTerms}",
+			"partnerCodeKey": "search_code_ddg",
+			"defaultPartnerCode": "cyanogenmod",
+			"searchUrl": "https://duckduckgo.com/?q={searchTerms}&t={partnerCode}",
 			"encoding": "UTF-8",
 			"suggestUri": ""
 		},
