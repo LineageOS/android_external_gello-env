@@ -35,36 +35,36 @@ Consider the following bookmarks to preload:
 The file **bookmarks_preload** will look like this:
 
     {
-        "version": "1.0"
-        "title": "TopLevelBookmarkFolder"
+        "version": "1.0",
+        "title": "TopLevelBookmarkFolder",
         "bookmarks": [{
             "title": "TopLevelBookmark1",
             "url": "www.toplevelbookmark1.com",
             "favicon": "data.image/png;base64,...",
-            "touchicon": "data.image/png;base64,...",
+            "touchicon": "data.image/png;base64,..."
         }, {
             "title": "TopLevelBookmark2",
             "url": "www.toplevelbookmark2.com",
             "favicon": "data.image/png;base64,...",
-            "touchicon": "data.image/png;base64,...",
+            "touchicon": "data.image/png;base64,..."
         }, {
             "title": "BookmarkFolder",
             "bookmarks": [{
                 "title": "Bookmark1",
                 "url": "www.bookmark1.com",
                 "favicon": "data.image/png;base64,...",
-                "touchicon": "data.image/png;base64,...",
+                "touchicon": "data.image/png;base64,..."
             }, {
                 "title": "Bookmark2",
                 "url": "www.bookmark2.com",
                 "favicon": "data.image/png;base64,...",
-                "touchicon": "data.image/png;base64,...",
+                "touchicon": "data.image/png;base64,..."
             }]
         }, {
             "title": "TopLevelBookmark3",
             "url": "www.toplevelbookmark3.com",
             "favicon": "data.image/png;base64,...",
-            "touchicon": "data.image/png;base64,...",
+            "touchicon": "data.image/png;base64,..."
         }]
     }
 

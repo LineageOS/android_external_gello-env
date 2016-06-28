@@ -1,0 +1,20 @@
+{
+	"version": "1.0",
+	"title": "CyanogenMod",
+	"bookmarks": [{
+		"title": "CyanogenMod",
+		"url": "www.cyanogenmod.org",
+		"favicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico",
+		"touchicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico"
+	}, {
+		"title": "CyanogenMod Wiki",
+		"url": "wiki.cyanogenmod.org",
+		"favicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico",
+		"touchicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico"
+	}, {
+		"title": "CyanogenMod Blog",
+		"url": "cyanogenmod.org/blog",
+		"favicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico",
+		"touchicon": "http://cyanogenmod.org/wp-content/themes/cyanogenmodv3/favicon.ico"
+	}]
+}
