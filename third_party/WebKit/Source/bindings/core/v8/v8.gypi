@@ -11,6 +11,7 @@
         'bindings_core_v8_dir': '.',
         'bindings_core_v8_files': [
             '<@(bindings_core_v8_custom_files)',
+            'V8HTMLCollectionCache.h',
             'ActiveDOMCallback.cpp',
             'ActiveDOMCallback.h',
             'ActiveScriptWrappable.cpp',

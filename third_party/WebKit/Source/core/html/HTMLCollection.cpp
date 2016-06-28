@@ -166,7 +166,7 @@ HTMLCollection::HTMLCollection(ContainerNode& ownerNode, CollectionType type, It
     : LiveNodeListBase(ownerNode, rootTypeFromCollectionType(type), invalidationTypeExcludingIdAndNameAttributes(type), type)
     , m_overridesItemAfter(itemAfterOverrideType == OverridesItemAfter)
     , m_shouldOnlyIncludeDirectChildren(shouldTypeOnlyIncludeDirectChildren(type))
-    , m_v8Cache(0)
+    , m_v8Cache(nullptr)
 {
 }
 
@@ -177,14 +177,21 @@ HTMLCollection* HTMLCollection::create(ContainerNode& base, CollectionType type)
 
 HTMLCollection::~HTMLCollection()
 {
-    invalidateV8Cache(this);
+    invalidateV8Cache();
 }
 
 void HTMLCollection::invalidateCache(Document* oldDocument) const
 {
-    invalidateV8Cache(this);
+    invalidateV8Cache();
     m_collectionItemsCache.invalidate();
     invalidateIdNameCacheMaps(oldDocument);
+}
+
+void HTMLCollection::invalidateV8Cache() const
+{
+    if (m_v8Cache) {
+        m_v8Cache->invalidateWrapper();
+    }
 }
 
 unsigned HTMLCollection::length() const
@@ -496,6 +503,7 @@ DEFINE_TRACE(HTMLCollection)
 {
     visitor->trace(m_namedItemCache);
     visitor->trace(m_collectionItemsCache);
+    visitor->trace(m_v8Cache);
     LiveNodeListBase::trace(visitor);
 }
 

@@ -30,9 +30,9 @@
 #include "core/html/CollectionType.h"
 #include "wtf/Forward.h"
 
-namespace blink {
+#include "bindings/core/v8/V8HTMLCollectionCache.h"
 
-class V8HTMLCollectionCache;
+namespace blink {
 
 class CORE_EXPORT HTMLCollection : public GarbageCollectedFinalized<HTMLCollection>, public ScriptWrappable, public LiveNodeListBase {
     DEFINE_WRAPPERTYPEINFO();
@@ -70,7 +70,7 @@ public:
 
     void setV8Cache(V8HTMLCollectionCache* cache){ m_v8Cache = cache; }
     V8HTMLCollectionCache* v8Cache() const { return m_v8Cache; }
-    static void invalidateV8Cache(const HTMLCollection*);
+    void invalidateV8Cache() const;
 
     DECLARE_VIRTUAL_TRACE();
 
@@ -159,7 +159,7 @@ private:
     const unsigned m_shouldOnlyIncludeDirectChildren : 1;
     mutable Member<NamedItemCache> m_namedItemCache;
     mutable CollectionItemsCache<HTMLCollection, Element> m_collectionItemsCache;
-    V8HTMLCollectionCache* m_v8Cache;
+    Member<V8HTMLCollectionCache> m_v8Cache;
 };
 
 DEFINE_TYPE_CASTS(HTMLCollection, LiveNodeListBase, collection, isHTMLCollectionType(collection->type()), isHTMLCollectionType(collection.type()));

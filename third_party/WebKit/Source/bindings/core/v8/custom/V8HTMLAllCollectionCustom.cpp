@@ -33,6 +33,7 @@
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8Element.h"
 #include "bindings/core/v8/V8HTMLCollection.h"
+#include "bindings/core/v8/V8HTMLCollectionCache.h"
 #include "bindings/core/v8/V8NodeList.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/frame/UseCounter.h"
@@ -127,91 +128,85 @@ void V8HTMLAllCollection::legacyCallCustom(const v8::FunctionCallbackInfo<v8::Va
 static const uint32_t kInterceptorQueryIndex = 0xFFFFFFEFu;
 static const uint32_t kMinItemsPerHTMLCollection = 1;
 
-class V8HTMLCollectionCache {
-public:
-    static bool setReturnValueFast(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info, HTMLCollection* impl )
-    {
-        if (index == kInterceptorQueryIndex
-            && DOMWrapperWorld::world(info.GetIsolate()->GetCurrentContext()).isMainWorld()) {
-            V8HTMLCollectionCache* cache = impl->v8Cache();
-            unsigned length = impl->length();
-            if (length >= kMinItemsPerHTMLCollection) {
-                if (!cache){
-                    cache = new V8HTMLCollectionCache(impl);
-                }
-                if (cache) {
-                    cache->setReturnValue(info);
-                    return true;
-                }
+bool V8HTMLCollectionCache::setReturnValueFast(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info, HTMLCollection* impl )
+{
+    if (index == kInterceptorQueryIndex
+        && DOMWrapperWorld::world(info.GetIsolate()->GetCurrentContext()).isMainWorld()) {
+        V8HTMLCollectionCache* cache = impl->v8Cache();
+        unsigned length = impl->length();
+        if (length >= kMinItemsPerHTMLCollection) {
+            if (!cache){
+                cache = V8HTMLCollectionCache::create(impl);
+            }
+            if (cache) {
+                cache->setReturnValue(info, impl);
+                return true;
             }
         }
-        return false;
     }
+    return false;
+}
 
-    V8HTMLCollectionCache(HTMLCollection* impl)
-        : m_impl(impl)
-    {
-        m_impl->setV8Cache(this);
-    }
-
-    ~V8HTMLCollectionCache()
-    {
-        if (m_impl) {
-            m_impl->setV8Cache(0);
-        }
-        m_wrapper.Reset();
-    }
-
-private:
-
-    void makeV8ArraySlow(v8::Isolate* isolate, v8::Handle<v8::Object> creationContext)
-    {
-        unsigned length = m_impl->length();
-        v8::Local<v8::Array> result = v8::Array::New(isolate, length);
-        for (unsigned i = 0; i < length; ++i) {
-            Element* element = m_impl->item(i);
-            if (element)
-                result->Set(i, toV8(element, creationContext, isolate));
-            else
-                result->Set(i, v8::Undefined(isolate));
-        }
-
-        m_wrapper.Reset(isolate, result);
-        m_wrapper.MarkIndependent();
-        m_wrapper.SetWeak(this, &weakCallback, v8::WeakCallbackType::kParameter);
-    }
-
-    bool containsWrapper() const { return !m_wrapper.IsEmpty(); }
-
-    void setReturnValue(const v8::PropertyCallbackInfo<v8::Value>& info)
-    {
-        if (!containsWrapper()) {
-            makeV8ArraySlow(info.GetIsolate(), info.Holder());
-        }
-        info.GetReturnValue().Set(m_wrapper);
-    }
-
-    void disposeWrapper(const v8::WeakCallbackInfo<V8HTMLCollectionCache>& data)
-    {
-        RELEASE_ASSERT(containsWrapper());
-        m_wrapper.Reset();
-    }
-
-    static void weakCallback(const v8::WeakCallbackInfo<V8HTMLCollectionCache>& data)
-    {
-        data.GetParameter()->disposeWrapper(data);
-    }
-
-    HTMLCollection* m_impl;
-    v8::Persistent<v8::Array> m_wrapper;
-};
-
-void HTMLCollection::invalidateV8Cache(const HTMLCollection* impl)
+void V8HTMLCollectionCache::invalidateWrapper()
 {
-    if (impl && impl->m_v8Cache) {
-        V8HTMLCollectionCache* cache = impl->m_v8Cache;
-        delete cache;
+    m_wrapper.Reset();
+}
+
+V8HTMLCollectionCache* V8HTMLCollectionCache::create(HTMLCollection* impl)
+{
+    return new V8HTMLCollectionCache(impl);
+}
+
+V8HTMLCollectionCache::V8HTMLCollectionCache(HTMLCollection* impl)
+{
+    impl->setV8Cache(this);
+}
+
+V8HTMLCollectionCache::~V8HTMLCollectionCache()
+{
+    m_wrapper.Reset();
+}
+
+void V8HTMLCollectionCache::makeV8ArraySlow(v8::Isolate* isolate, v8::Handle<v8::Object> creationContext, HTMLCollection* impl)
+{
+    unsigned length = impl->length();
+    v8::Local<v8::Array> result = v8::Array::New(isolate, length);
+    for (unsigned i = 0; i < length; ++i) {
+        Element* element = impl->item(i);
+        if (element)
+            result->Set(i, toV8(element, creationContext, isolate));
+        else
+            result->Set(i, v8::Undefined(isolate));
     }
+
+    m_wrapper.Reset(isolate, result);
+    m_wrapper.MarkIndependent();
+    m_wrapper.SetWeak(this, &weakCallback, v8::WeakCallbackType::kParameter);
+}
+
+bool V8HTMLCollectionCache::containsWrapper() const { return !m_wrapper.IsEmpty(); }
+
+void V8HTMLCollectionCache::setReturnValue(const v8::PropertyCallbackInfo<v8::Value>& info, HTMLCollection* impl)
+{
+    if (!containsWrapper()) {
+        makeV8ArraySlow(info.GetIsolate(), info.Holder(), impl);
+    }
+    info.GetReturnValue().Set(m_wrapper);
+}
+
+void V8HTMLCollectionCache::disposeWrapper(const v8::WeakCallbackInfo<V8HTMLCollectionCache>& data)
+{
+    RELEASE_ASSERT(containsWrapper());
+    m_wrapper.Reset();
+}
+
+void V8HTMLCollectionCache::weakCallback(const v8::WeakCallbackInfo<V8HTMLCollectionCache>& data)
+{
+    data.GetParameter()->disposeWrapper(data);
+}
+
+DEFINE_TRACE(V8HTMLCollectionCache)
+{
 }
 
 void V8HTMLCollection::itemMethodCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
