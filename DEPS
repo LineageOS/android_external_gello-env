@@ -294,7 +294,7 @@ deps = {
     Var('chromium_git') + '/chromium/llvm-project/llvm/lib/Fuzzer.git' + '@' +  Var('libfuzzer_revision'),
 
   'src/swe/swe_core':
-    Var('webtech_devx_url') + '/swe-core.git' + '@' + '674852d912f954bc22307a2d9a7b36a72dfe2b2d',
+    Var('webtech_devx_url') + '/swe-core.git' + '@' + '3a9b4c22fa7968c9aa078f30d34213c71efd72b9',
 
   'src/components/web_refiner':
     Var('webtech_devx_url') + '/web-refiner.git' + '@' + '8cf32c756b0bb85969b14550a5ea8528b47f027a',
