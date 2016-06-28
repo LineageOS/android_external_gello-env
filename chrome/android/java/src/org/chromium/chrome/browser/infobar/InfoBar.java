@@ -170,6 +170,10 @@ public abstract class InfoBar implements InfoBarView {
     public void createContent(InfoBarLayout layout) {
     }
 
+    public long GetNativeInfoBarPtr() {
+        return mNativeInfoBarPtr;
+    }
+
     private native void nativeOnLinkClicked(long nativeInfoBarAndroid);
     private native void nativeOnButtonClicked(long nativeInfoBarAndroid, int action);
     private native void nativeOnCloseButtonClicked(long nativeInfoBarAndroid);

@@ -29,19 +29,25 @@
 
 package org.chromium.chrome.browser;
 
+import android.app.Activity;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.support.v4.content.LocalBroadcastManager;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.infobar.DownloadInfoBar;
 import org.chromium.chrome.browser.init.AsyncInitializationActivity;
 import org.chromium.chrome.browser.preferences.AboutChromePreferences;
 import org.chromium.chrome.browser.preferences.Preferences;
@@ -66,6 +72,10 @@ import org.chromium.chrome.browser.toolbar.ToolbarManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.UrlUtilities;
 
+import org.codeaurora.swe.SWEBrowserSwitches;
+import org.codeaurora.swe.SWECommandLine;
+import org.codeaurora.swe.DownloadInfoBarContainer;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +85,10 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
     private EmptyTabModelObserver mBrowserTabModelObserver;
     private PowerConnectionReceiver mPowerChangeReceiver;
     private PowerConnectionReceiver mLowPowerReceiver;
+    private BroadcastReceiver mDirSelectIntentReceiver;
+    private Uri mCurrentDownloadInfoBarDataUri;
     private static final int PREFERENCE_REQUEST = 1;
+    private static final int DOWNLOADPATH_SELECTION = 0;
 
     /**
      * Sets the {@link TabModelSelector} owned by this {@link ChromeActivity}.
@@ -150,10 +163,12 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
         reloadTabsIfNecessary();
 
         this.registerReceiver(mLowPowerReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
+        registerDownloadPathSelectionReceiver();
     }
 
     @Override
     public void onPauseWithNative() {
+        unregisterDownloadPathSelectionReceiver();
         this.unregisterReceiver(mLowPowerReceiver);
         super.onPauseWithNative();
     }
@@ -161,8 +176,15 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
     @SuppressLint("NewApi")
     @Override
     protected void onDestroy() {
+        unregisterDownloadPathSelectionReceiver();
         this.unregisterReceiver(mPowerChangeReceiver);
         super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        unregisterDownloadPathSelectionReceiver();
+        super.finish();
     }
 
     @SuppressLint("NewApi")
@@ -200,6 +222,9 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 }
             }
+        } else if (requestCode == DOWNLOADPATH_SELECTION &&
+                resultCode == RESULT_OK) {
+            handleDownloadPathSelectionRequestCode(data);
         }
     }
 
@@ -316,5 +341,79 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
             return true;
         }
         return false;
+    }
+
+    private void registerDownloadPathSelectionReceiver() {
+        if (!CommandLine.getInstance().hasSwitch(
+                    SWEBrowserSwitches.DOWNLOAD_PATH_SELECTION))
+            return;
+
+        if (null != mDirSelectIntentReceiver)
+            return;
+
+        mDirSelectIntentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Uri uri = intent.getData();
+                if (null == uri)
+                    return;
+
+                Intent selectDirIntent =
+                    DownloadInfoBarContainer.getInstance().getSelectDirIntent(
+                            uri);
+                if (null == selectDirIntent)
+                    return;
+
+                mCurrentDownloadInfoBarDataUri = uri;
+                BrowserChromeActivity.this.startActivityForResult(
+                        selectDirIntent,
+                        DOWNLOADPATH_SELECTION);
+            }
+        };
+
+        try {
+            LocalBroadcastManager.getInstance(this).registerReceiver(
+                    mDirSelectIntentReceiver,
+                    new IntentFilter(DownloadInfoBarContainer.RECEIVER_NAME, "*/*"));
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void unregisterDownloadPathSelectionReceiver() {
+        if (null != mDirSelectIntentReceiver) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                    mDirSelectIntentReceiver);
+            mDirSelectIntentReceiver = null;
+        }
+    }
+
+    private void handleDownloadPathSelectionRequestCode(Intent data) {
+        if (null == data || null == mCurrentDownloadInfoBarDataUri)
+            return;
+
+        String selectDirKey = SWECommandLine.getResourceString(
+                getApplicationContext(),
+                SWECommandLine.kSWEDownloadPathActivityResultSelection);
+        if (TextUtils.isEmpty(selectDirKey))
+            return;
+
+        String selectedDir = data.getStringExtra(selectDirKey);
+        if (TextUtils.isEmpty(selectedDir))
+            return;
+
+        DownloadInfoBarContainer container =
+            DownloadInfoBarContainer.getInstance();
+        if (null == container)
+            return;
+
+        DownloadInfoBar infoBar =
+            container.getInstance().getDownloadInfoBar(
+                mCurrentDownloadInfoBarDataUri);
+        if (null == infoBar)
+            return;
+
+        infoBar.setDirFullPath(selectedDir, true);
+        mCurrentDownloadInfoBarDataUri = null;
     }
 }

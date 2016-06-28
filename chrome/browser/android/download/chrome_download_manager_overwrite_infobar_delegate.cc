@@ -43,19 +43,25 @@ ChromeDownloadManagerOverwriteInfoBarDelegate::
 // static
 void ChromeDownloadManagerOverwriteInfoBarDelegate::Create(
     InfoBarService* infobar_service,
+    int64_t total_bytes,
+    const std::string& mime_type,
     const base::FilePath& suggested_path,
     const DownloadTargetDeterminerDelegate::FileSelectedCallback& callback) {
   infobar_service->AddInfoBar(DownloadOverwriteInfoBar::CreateInfoBar(
       base::WrapUnique(new ChromeDownloadManagerOverwriteInfoBarDelegate(
-          suggested_path, callback))));
+          total_bytes, mime_type, suggested_path, callback))));
 }
 
 ChromeDownloadManagerOverwriteInfoBarDelegate::
     ChromeDownloadManagerOverwriteInfoBarDelegate(
+        int64_t total_bytes,
+        const std::string& mime_type,
         const base::FilePath& suggested_download_path,
         const DownloadTargetDeterminerDelegate::FileSelectedCallback&
             file_selected_callback)
-    : suggested_download_path_(suggested_download_path),
+    : total_bytes_(total_bytes),
+      mime_type_(mime_type),
+      suggested_download_path_(suggested_download_path),
       file_selected_callback_(file_selected_callback) {
 }
 
@@ -85,6 +91,14 @@ std::string ChromeDownloadManagerOverwriteInfoBarDelegate::GetFileName() const {
   return suggested_download_path_.BaseName().value();
 }
 
+int64_t ChromeDownloadManagerOverwriteInfoBarDelegate::GetTotalBytes() const {
+  return total_bytes_;
+}
+
+std::string ChromeDownloadManagerOverwriteInfoBarDelegate::GetMimeType() const {
+  return mime_type_;
+}
+
 std::string ChromeDownloadManagerOverwriteInfoBarDelegate::GetDirName() const {
   return suggested_download_path_.DirName().BaseName().value();
 }
@@ -92,6 +106,18 @@ std::string ChromeDownloadManagerOverwriteInfoBarDelegate::GetDirName() const {
 std::string ChromeDownloadManagerOverwriteInfoBarDelegate::GetDirFullPath()
     const {
   return suggested_download_path_.DirName().value();
+}
+
+bool ChromeDownloadManagerOverwriteInfoBarDelegate::SetDirFullPath(
+    const std::string& dir_full_path) {
+  std::vector<base::FilePath::StringType> components;
+  suggested_download_path_.GetComponents(&components);
+  if (components.empty())
+      return false;
+
+  base::FilePath new_download_path(dir_full_path);
+  suggested_download_path_ = new_download_path.Append(components.back());
+  return true;
 }
 
 void ChromeDownloadManagerOverwriteInfoBarDelegate::InfoBarDismissed() {

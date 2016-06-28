@@ -24,6 +24,11 @@ class DownloadOverwriteInfoBar : public InfoBarAndroid {
           delegate);
   ~DownloadOverwriteInfoBar() override;
 
+  void SetDirFullPath(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jstring>& jdir_full_path);
+
  private:
   explicit DownloadOverwriteInfoBar(
       std::unique_ptr<chrome::android::DownloadOverwriteInfoBarDelegate>

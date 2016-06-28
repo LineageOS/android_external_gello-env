@@ -28,12 +28,16 @@ class ChromeDownloadManagerOverwriteInfoBarDelegate
 
   static void Create(
       InfoBarService* infobar_service,
+      int64_t total_bytes,
+      const std::string& mime_type,
       const base::FilePath& suggested_download_path,
       const DownloadTargetDeterminerDelegate::FileSelectedCallback&
           file_selected_callback);
 
  private:
   ChromeDownloadManagerOverwriteInfoBarDelegate(
+      int64_t total_bytes,
+      const std::string& mime_type,
       const base::FilePath& suggested_path,
       const DownloadTargetDeterminerDelegate::FileSelectedCallback& callback);
 
@@ -42,8 +46,11 @@ class ChromeDownloadManagerOverwriteInfoBarDelegate
   bool OverwriteExistingFile() override;
   bool CreateNewFile() override;
   std::string GetFileName() const override;
+  int64_t GetTotalBytes() const override;
+  std::string GetMimeType() const override;
   std::string GetDirName() const override;
   std::string GetDirFullPath() const override;
+  bool SetDirFullPath(const std::string& dir_full_path) override;
   void InfoBarDismissed() override;
 
   // Called on the FILE thread to create a new file.  Calls |callback| on the UI
@@ -51,6 +58,12 @@ class ChromeDownloadManagerOverwriteInfoBarDelegate
   static void CreateNewFileInternal(
       const base::FilePath& suggested_download_path,
       const DownloadTargetDeterminerDelegate::FileSelectedCallback& callback);
+
+  // Total bytes of the file to be downloaded.
+  int64_t total_bytes_;
+
+  // MIME type of the file to be downloaded.
+  std::string mime_type_;
 
   // The suggested download path from download target determiner. This is used
   // to show users the file name and the directory that will be used.

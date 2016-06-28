@@ -43,4 +43,5 @@ public class SWEBrowserSwitches {
 
     public static final String DRM_UPLOAD = "drm-upload";
 
+    public static final String DOWNLOAD_PATH_SELECTION = "download-path-selection";
 }

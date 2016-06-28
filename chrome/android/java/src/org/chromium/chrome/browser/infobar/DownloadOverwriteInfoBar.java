@@ -18,6 +18,7 @@ import android.text.style.StyleSpan;
 import android.view.View;
 
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.chrome.browser.infobar.DownloadInfoBar;
 import org.chromium.chrome.R;
 
 import java.util.List;
@@ -28,13 +29,19 @@ import java.util.List;
 public class DownloadOverwriteInfoBar extends InfoBar {
     private static final String TAG = "DownloadOverwriteInfoBar";
 
-    private final String mFileName;
-    private final String mDirName;
-    private final String mDirFullPath;
+    protected final String mFileName;
+    protected String mDirName;
+    protected String mDirFullPath;
 
     @CalledByNative
-    private static InfoBar createInfoBar(String fileName, String dirName, String dirFullPath) {
-        return new DownloadOverwriteInfoBar(fileName, dirName, dirFullPath);
+    private static InfoBar createInfoBar(String fileName, long totalBytes,
+            String mimeType, String dirName, String dirFullPath) {
+        if (DownloadInfoBar.areSWEDownloadEnhancementsEnabled()) {
+            return new DownloadInfoBar(fileName, totalBytes,
+                    mimeType, dirName, dirFullPath);
+        } else {
+            return new DownloadOverwriteInfoBar(fileName, dirName, dirFullPath);
+        }
     }
 
     /**
@@ -43,7 +50,7 @@ public class DownloadOverwriteInfoBar extends InfoBar {
      * @param dirName The dir name. ex) Downloads
      * @param dirFullPath The full dir path. ex) sdcards/Downloads
      */
-    private DownloadOverwriteInfoBar(String fileName, String dirName, String dirFullPath) {
+    protected DownloadOverwriteInfoBar(String fileName, String dirName, String dirFullPath) {
         super(R.drawable.infobar_downloading, null, null);
         mFileName = fileName;
         mDirName = dirName;
@@ -125,4 +132,7 @@ public class DownloadOverwriteInfoBar extends InfoBar {
                 packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return resolveInfoList.size() > 0;
     }
+
+    protected native void nativeSetDirFullPath(long nativeDownloadOverwriteInfoBar,
+            String dirFullPath);
 }

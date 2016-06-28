@@ -26,6 +26,8 @@ class AndroidDownloadManagerOverwriteInfoBarDelegate
 
   static void Create(InfoBarService* infobar_service,
                      const std::string& file_name,
+                     int64_t total_bytes,
+                     const std::string& mime_type,
                      const std::string& dir_name,
                      const std::string& dir_full_path,
                      jobject chrome_download_delegate,
@@ -34,6 +36,8 @@ class AndroidDownloadManagerOverwriteInfoBarDelegate
  private:
   AndroidDownloadManagerOverwriteInfoBarDelegate(
       const std::string& file_name,
+      int64_t total_bytes,
+      const std::string& mime_type,
       const std::string& dir_name,
       const std::string& dir_full_path,
       jobject chrome_download_delegate,
@@ -44,10 +48,15 @@ class AndroidDownloadManagerOverwriteInfoBarDelegate
   bool OverwriteExistingFile() override;
   bool CreateNewFile() override;
   std::string GetFileName() const override;
+  int64_t GetTotalBytes() const override;
+  std::string GetMimeType() const override;
   std::string GetDirName() const override;
   std::string GetDirFullPath() const override;
+  bool SetDirFullPath(const std::string& dir_full_path) override;
 
   std::string file_name_;
+  int64_t total_bytes_;
+  std::string mime_type_;
   std::string dir_name_;
   std::string dir_full_path_;
   base::android::ScopedJavaGlobalRef<jobject> chrome_download_delegate_;

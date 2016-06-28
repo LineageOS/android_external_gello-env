@@ -21,6 +21,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -38,6 +39,8 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.base.WindowAndroid.PermissionCallback;
 import org.chromium.ui.widget.Toast;
+
+import org.codeaurora.swe.SWEBrowserSwitches;
 
 import java.io.File;
 
@@ -357,6 +360,12 @@ public class ChromeDownloadDelegate implements ContentViewDownloadDelegate {
 
     private static boolean doesFileAlreadyExists(String dirPath, final String fileName) {
         assert !ThreadUtils.runningOnUiThread();
+
+        // If SWE download enhancements are enabled, return true always so that
+        // we always launch the infobar.
+        if (CommandLine.getInstance().hasSwitch(SWEBrowserSwitches.DOWNLOAD_PATH_SELECTION))
+            return true;
+
         final File file = new File(dirPath, fileName);
         return file != null && file.exists();
     }
@@ -377,11 +386,23 @@ public class ChromeDownloadDelegate implements ContentViewDownloadDelegate {
      *
      * @param overwrite Whether or not we will overwrite the file.
      * @param downloadInfo The download info.
+     * @param dirFullPath Full path of the folder to download the file to.
      * @return true iff this request resulted in the tab creating the download to close.
      */
     @CalledByNative
     private boolean enqueueDownloadManagerRequestFromNative(
-            final boolean overwrite, final DownloadInfo downloadInfo) {
+            final boolean overwrite, final DownloadInfo downloadInfo,
+            final String dirFullPath) {
+        if (CommandLine.getInstance().hasSwitch(
+                    SWEBrowserSwitches.DOWNLOAD_PATH_SELECTION) &&
+                null != dirFullPath && false == overwrite) {
+            DownloadInfo.Builder builder =
+                DownloadInfo.Builder.fromDownloadInfo(downloadInfo);
+            builder.setFilePath(dirFullPath);
+            enqueueDownloadManagerRequest(builder.build());
+            return closeBlankTab();
+        }
+
         if (overwrite) {
             // Android DownloadManager does not have an overwriting option.
             // We remove the file here instead.
@@ -406,7 +427,8 @@ public class ChromeDownloadDelegate implements ContentViewDownloadDelegate {
     private void launchDownloadInfoBar(DownloadInfo info, String dirName, String fullDirPath) {
         if (mTab == null) return;
         nativeLaunchDownloadOverwriteInfoBar(
-                ChromeDownloadDelegate.this, mTab, info, info.getFileName(), dirName, fullDirPath);
+                ChromeDownloadDelegate.this, mTab, info, info.getFileName(),
+                info.getContentLength(), info.getMimeType(), dirName, fullDirPath);
     }
 
     /**
@@ -633,8 +655,8 @@ public class ChromeDownloadDelegate implements ContentViewDownloadDelegate {
     private static native void nativeDangerousDownloadValidated(
             Object tab, String downloadGuid, boolean accept);
     private static native void nativeLaunchDownloadOverwriteInfoBar(ChromeDownloadDelegate delegate,
-            Tab tab, DownloadInfo downloadInfo, String fileName, String dirName,
-            String dirFullPath);
+            Tab tab, DownloadInfo downloadInfo, String fileName, long totalBytes, String mimeType,
+            String dirName, String dirFullPath);
     private static native void nativeLaunchPermissionUpdateInfoBar(
             Tab tab, String permission, long callbackId);
 }

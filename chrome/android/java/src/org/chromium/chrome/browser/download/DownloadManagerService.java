@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.LongSparseArray;
 import android.util.Pair;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
@@ -36,6 +37,8 @@ import org.chromium.net.ConnectionType;
 import org.chromium.net.NetworkChangeNotifierAutoDetect;
 import org.chromium.net.RegistrationPolicyAlwaysRegister;
 import org.chromium.ui.widget.Toast;
+
+import org.codeaurora.swe.SWEBrowserSwitches;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -806,20 +809,22 @@ public class DownloadManagerService extends BroadcastReceiver implements
 
             request.setMimeType(info.getMimeType());
             try {
-                if (notifyCompleted) {
-                    // Set downloaded file destination to /sdcard/Download or, should it be
-                    // set to one of several Environment.DIRECTORY* dirs depending on mimetype?
-                    request.setDestinationInExternalPublicDir(
-                            Environment.DIRECTORY_DOWNLOADS, info.getFileName());
-                } else {
-                    File dir = new File(mContext.getExternalFilesDir(null), DOWNLOAD_DIRECTORY);
-                    if (dir.mkdir() || dir.isDirectory()) {
-                        File file = new File(dir, info.getFileName());
-                        request.setDestinationUri(Uri.fromFile(file));
+                if (!sweSetFullDirPath(info, request)) {
+                    if (notifyCompleted) {
+                        // Set downloaded file destination to /sdcard/Download or, should it be
+                        // set to one of several Environment.DIRECTORY* dirs depending on mimetype?
+                        request.setDestinationInExternalPublicDir(
+                                Environment.DIRECTORY_DOWNLOADS, info.getFileName());
                     } else {
-                        Log.e(TAG, "Cannot create download directory");
-                        mFailureReason = DownloadManager.ERROR_FILE_ERROR;
-                        return false;
+                        File dir = new File(mContext.getExternalFilesDir(null), DOWNLOAD_DIRECTORY);
+                        if (dir.mkdir() || dir.isDirectory()) {
+                            File file = new File(dir, info.getFileName());
+                            request.setDestinationUri(Uri.fromFile(file));
+                        } else {
+                            Log.e(TAG, "Cannot create download directory");
+                            mFailureReason = DownloadManager.ERROR_FILE_ERROR;
+                            return false;
+                        }
                     }
                 }
             } catch (IllegalStateException e) {
@@ -905,6 +910,18 @@ public class DownloadManagerService extends BroadcastReceiver implements
             mDownloadItem.setSystemDownloadId(mDownloadId);
             mDownloadItem.setStartTime(mStartTime);
             mSystemDownloadIdMap.put(mDownloadId, mDownloadItem);
+        }
+
+        private boolean sweSetFullDirPath(DownloadInfo info,
+                DownloadManager.Request request) {
+            if (CommandLine.getInstance().hasSwitch(
+                        SWEBrowserSwitches.DOWNLOAD_PATH_SELECTION)) {
+                File destinationFile = new File(info.getFilePath(), info.getFileName());
+                request.setDestinationUri(Uri.fromFile(destinationFile));
+                return true;
+            }
+
+            return false;
         }
     }
 

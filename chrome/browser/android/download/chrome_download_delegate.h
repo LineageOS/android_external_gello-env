@@ -15,7 +15,8 @@ class ChromeDownloadDelegate {
   // to close.
   static bool EnqueueDownloadManagerRequest(jobject chrome_download_delegate,
                                             bool overwrite,
-                                            jobject download_info);
+                                            jobject download_info,
+                                            const std::string& dir_full_path);
 };
 
 bool RegisterChromeDownloadDelegate(JNIEnv* env);

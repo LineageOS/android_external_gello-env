@@ -589,8 +589,10 @@ DownloadControllerAndroidImpl::DownloadInfoAndroid::DownloadInfoAndroid(
     : has_user_gesture(false) {
   request->GetResponseHeaderByName("content-disposition", &content_disposition);
 
-  if (request->response_headers())
+  if (request->response_headers()) {
     request->response_headers()->GetMimeType(&original_mime_type);
+    total_bytes = request->response_headers()->GetContentLength();
+  }
 
   request->extra_request_headers().GetHeader(
       net::HttpRequestHeaders::kUserAgent, &user_agent);

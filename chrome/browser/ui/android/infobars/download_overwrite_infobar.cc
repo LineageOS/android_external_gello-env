@@ -26,6 +26,17 @@ std::unique_ptr<infobars::InfoBar> DownloadOverwriteInfoBar::CreateInfoBar(
 DownloadOverwriteInfoBar::~DownloadOverwriteInfoBar() {
 }
 
+void DownloadOverwriteInfoBar::SetDirFullPath(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    const base::android::JavaParamRef<jstring>& jdir_full_path) {
+  DownloadOverwriteInfoBarDelegate* delegate = GetDelegate();
+
+  std::string dir_full_path =
+      base::android::ConvertJavaStringToUTF8(env, jdir_full_path);
+  delegate->SetDirFullPath(dir_full_path);
+}
+
 DownloadOverwriteInfoBar::DownloadOverwriteInfoBar(
     std::unique_ptr<DownloadOverwriteInfoBarDelegate> delegate)
     : InfoBarAndroid(std::move(delegate)) {}
@@ -36,13 +47,17 @@ DownloadOverwriteInfoBar::CreateRenderInfoBar(JNIEnv* env) {
 
   ScopedJavaLocalRef<jstring> j_file_name =
       base::android::ConvertUTF8ToJavaString(env, delegate->GetFileName());
+  jlong j_total_bytes = delegate->GetTotalBytes();
+  ScopedJavaLocalRef<jstring> j_mime_type =
+      base::android::ConvertUTF8ToJavaString(env, delegate->GetMimeType());
   ScopedJavaLocalRef<jstring> j_dir_name =
       base::android::ConvertUTF8ToJavaString(env, delegate->GetDirName());
   ScopedJavaLocalRef<jstring> j_dir_full_path =
       base::android::ConvertUTF8ToJavaString(env, delegate->GetDirFullPath());
   base::android::ScopedJavaLocalRef<jobject> java_infobar(
       Java_DownloadOverwriteInfoBar_createInfoBar(
-          env, j_file_name.obj(), j_dir_name.obj(), j_dir_full_path.obj()));
+          env, j_file_name.obj(), j_total_bytes, j_mime_type.obj(),
+          j_dir_name.obj(), j_dir_full_path.obj()));
   return java_infobar;
 }
 
@@ -57,6 +72,8 @@ void DownloadOverwriteInfoBar::ProcessButton(int action) {
   } else if (action == InfoBarAndroid::ACTION_CREATE_NEW_FILE) {
     if (delegate->CreateNewFile())
       RemoveSelf();
+  } else if (action == InfoBarAndroid::ACTION_CANCEL) {
+    RemoveSelf();
   } else {
     CHECK(false);
   }

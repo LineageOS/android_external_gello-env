@@ -42,10 +42,16 @@ class DownloadOverwriteInfoBarDelegate : public infobars::InfoBarDelegate {
 
   // Gets the file name to be downloaded.
   virtual std::string GetFileName() const = 0;
+  // Gets the total bytes of the file to be downloaded.
+  virtual int64_t GetTotalBytes() const = 0;
+  // Get the mime type of the file to be downloaded.
+  virtual std::string GetMimeType() const = 0;
   // Gets the download directory name.
   virtual std::string GetDirName() const = 0;
   // Gets the full directory path.
   virtual std::string GetDirFullPath() const = 0;
+  // Sets the full directory path.
+  virtual bool SetDirFullPath(const std::string& dir_full_path) = 0;
 
   bool ShouldExpire(const NavigationDetails& details) const override;
 };

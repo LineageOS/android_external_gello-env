@@ -46,6 +46,11 @@ public final class SWECommandLine {
     private String mEstoreHomepage;
     private String mEstoreDownloadAppMessage;
 
+    public static final String kSWEDownloadPathActivityIntent =
+            "swe_downloadpath_activity_intent";
+    public static final String kSWEDownloadPathActivityResultSelection =
+            "swe_downloadpath_activity_result_selection";
+
     private SWECommandLine(Context context) {
         mContext = context;
     }
@@ -62,6 +67,7 @@ public final class SWECommandLine {
         overrideMediaDownload();
         setEstoreConfig();
         setDrmUpload();
+        setDownloadPathSelection();
     }
 
     private void overrideUserAgent() {
@@ -163,4 +169,26 @@ public final class SWECommandLine {
         }
     }
 
+    public static String getResourceString(Context ctx, String resId) {
+        final int id = ctx.getResources().getIdentifier(
+                resId, "string", ctx.getPackageName());
+        if (0 == id)
+            return null;
+
+        return ctx.getResources().getString(id);
+    }
+
+    private void setDownloadPathSelection() {
+        String downloadpathSelectionActivityIntent =
+            getResourceString(mContext,
+                    kSWEDownloadPathActivityIntent);
+        String downloadpathSelectionActivityResult =
+            getResourceString(mContext,
+                    kSWEDownloadPathActivityResultSelection);
+        if (!TextUtils.isEmpty(downloadpathSelectionActivityIntent)
+                && !TextUtils.isEmpty(downloadpathSelectionActivityResult)) {
+            CommandLine cl = CommandLine.getInstance();
+            cl.appendSwitch(SWEBrowserSwitches.DOWNLOAD_PATH_SELECTION);
+        }
+    }
 }

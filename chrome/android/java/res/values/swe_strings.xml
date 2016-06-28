@@ -156,4 +156,11 @@
 
       <string name="swe_def_action_wifi_selection_data_connections" translateable="false"></string>
       <string name="swe_def_intent_pick_network" translateable="false"></string>
+
+    <!-- File Download Enhancements -->
+    <string name="swe_download_infobar_text" desc="Prompt text for the confirmation dialog as
+    king whether the user really wants to download a file">Do you want to download ^1 to ^2?</string>
+    <string name="swe_downloadpath_not_enough_space">%1$s - Not enough space for download</string>
+    <string name="swe_downloadpath_activity_intent" translateable="false"></string>
+    <string name="swe_downloadpath_activity_result_selection" translatable="false"></string>
 </resources>

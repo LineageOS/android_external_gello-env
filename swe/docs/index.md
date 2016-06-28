@@ -4,7 +4,7 @@
 3. Customizable QRD Features
     1. [E-Store Protocol Support](estore.md)
     2. [Block DRM Content Upload](no_drm_upload.md)
-    3. [Custom Download Path](custom_download.md)
+    3. [Download Enhancements](download_enhancements.md)
     4. [Custom Homepage](custom_homepage.md)
     5. [Preload Bookmarks](preload_bookmarks.md)
     6. [Custom Search Engine](search_engine.md)

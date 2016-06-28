@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -52,6 +53,11 @@ using content::DownloadManager;
 using safe_browsing::FileTypePolicies;
 
 namespace {
+
+bool HasDownloadPathSelectionSwitch() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      "download-path-selection");
+}
 
 // Consider downloads 'dangerous' if they go to the home directory on Linux and
 // to the desktop on any platform.
@@ -267,6 +273,9 @@ void DownloadPrefs::SetDownloadPath(const base::FilePath& path) {
 }
 
 base::FilePath DownloadPrefs::SaveFilePath() const {
+  if (HasDownloadPathSelectionSwitch())
+      return DownloadPath();
+
   return *save_file_path_;
 }
 
@@ -282,6 +291,10 @@ bool DownloadPrefs::PromptForDownload() const {
   // If the DownloadDirectory policy is set, then |prompt_for_download_| should
   // always be false.
   DCHECK(!download_path_.IsManaged() || !prompt_for_download_.GetValue());
+
+  if (HasDownloadPathSelectionSwitch())
+    return true;
+
   return *prompt_for_download_;
 }
 

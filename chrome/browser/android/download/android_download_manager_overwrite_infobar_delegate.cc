@@ -30,24 +30,30 @@ AndroidDownloadManagerOverwriteInfoBarDelegate::
 void AndroidDownloadManagerOverwriteInfoBarDelegate::Create(
     InfoBarService* infobar_service,
     const std::string& file_name,
+    int64_t total_bytes,
+    const std::string& mime_type,
     const std::string& dir_name,
     const std::string& dir_full_path,
     jobject chrome_download_delegate,
     jobject download_info) {
   infobar_service->AddInfoBar(DownloadOverwriteInfoBar::CreateInfoBar(
       base::WrapUnique(new AndroidDownloadManagerOverwriteInfoBarDelegate(
-          file_name, dir_name, dir_full_path, chrome_download_delegate,
-          download_info))));
+          file_name, total_bytes, mime_type, dir_name, dir_full_path,
+          chrome_download_delegate, download_info))));
 }
 
 AndroidDownloadManagerOverwriteInfoBarDelegate::
     AndroidDownloadManagerOverwriteInfoBarDelegate(
         const std::string& file_name,
+        int64_t total_bytes,
+        const std::string& mime_type,
         const std::string& dir_name,
         const std::string& dir_full_path,
         jobject chrome_download_delegate,
         jobject download_info)
     : file_name_(file_name),
+      total_bytes_(total_bytes),
+      mime_type_(mime_type),
       dir_name_(dir_name),
       dir_full_path_(dir_full_path) {
   JNIEnv* env = base::android::AttachCurrentThread();
@@ -62,19 +68,29 @@ AndroidDownloadManagerOverwriteInfoBarDelegate::GetIdentifier() const {
 
 bool AndroidDownloadManagerOverwriteInfoBarDelegate::OverwriteExistingFile() {
   bool tab_closed = ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
-      chrome_download_delegate_.obj(), true, download_info_.obj());
+      chrome_download_delegate_.obj(), true, download_info_.obj(),
+      dir_full_path_);
   return !tab_closed;
 }
 
 bool AndroidDownloadManagerOverwriteInfoBarDelegate::CreateNewFile() {
   bool tab_closed = ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
-      chrome_download_delegate_.obj(), false, download_info_.obj());
+      chrome_download_delegate_.obj(), false, download_info_.obj(),
+      dir_full_path_);
   return !tab_closed;
 }
 
 std::string AndroidDownloadManagerOverwriteInfoBarDelegate::GetFileName()
     const {
   return file_name_;
+}
+
+int64_t AndroidDownloadManagerOverwriteInfoBarDelegate::GetTotalBytes() const {
+  return total_bytes_;
+}
+
+std::string AndroidDownloadManagerOverwriteInfoBarDelegate::GetMimeType() const {
+  return mime_type_;
 }
 
 std::string AndroidDownloadManagerOverwriteInfoBarDelegate::GetDirName() const {
@@ -84,6 +100,12 @@ std::string AndroidDownloadManagerOverwriteInfoBarDelegate::GetDirName() const {
 std::string AndroidDownloadManagerOverwriteInfoBarDelegate::GetDirFullPath()
     const {
   return dir_full_path_;
+}
+
+bool AndroidDownloadManagerOverwriteInfoBarDelegate::SetDirFullPath(
+    const std::string& dir_full_path) {
+  dir_full_path_ = dir_full_path;
+  return true;
 }
 
 }  // namespace android

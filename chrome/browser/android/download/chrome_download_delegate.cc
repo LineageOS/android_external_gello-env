@@ -67,11 +67,16 @@ static void DangerousDownloadValidated(
 bool ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
     jobject chrome_download_delegate,
     bool overwrite,
-    jobject download_info) {
+    jobject download_info,
+    const std::string& dir_full_path) {
   JNIEnv* env = base::android::AttachCurrentThread();
 
+  ScopedJavaLocalRef<jstring> j_dir_full_path =
+      base::android::ConvertUTF8ToJavaString(env, dir_full_path);
+
   return Java_ChromeDownloadDelegate_enqueueDownloadManagerRequestFromNative(
-      env, chrome_download_delegate, overwrite, download_info);
+      env, chrome_download_delegate, overwrite, download_info,
+      j_dir_full_path.obj());
 }
 
 // Called when we need to interrupt download and ask users whether to overwrite
@@ -83,19 +88,24 @@ static void LaunchDownloadOverwriteInfoBar(
     const JavaParamRef<jobject>& tab,
     const JavaParamRef<jobject>& download_info,
     const JavaParamRef<jstring>& jfile_name,
+    jlong jtotal_bytes,
+    const JavaParamRef<jstring>& jmime_type,
     const JavaParamRef<jstring>& jdir_name,
     const JavaParamRef<jstring>& jdir_full_path) {
   TabAndroid* tab_android = TabAndroid::GetNativeTab(env, tab);
 
   std::string file_name =
       base::android::ConvertJavaStringToUTF8(env, jfile_name);
+  int64_t total_bytes = jtotal_bytes;
+  std::string mime_type =
+      base::android::ConvertJavaStringToUTF8(env, jmime_type);
   std::string dir_name = base::android::ConvertJavaStringToUTF8(env, jdir_name);
   std::string dir_full_path =
       base::android::ConvertJavaStringToUTF8(env, jdir_full_path);
 
   chrome::android::AndroidDownloadManagerOverwriteInfoBarDelegate::Create(
       InfoBarService::FromWebContents(tab_android->web_contents()), file_name,
-      dir_name, dir_full_path, delegate, download_info);
+      total_bytes, mime_type, dir_name, dir_full_path, delegate, download_info);
 }
 
 static void LaunchPermissionUpdateInfoBar(
