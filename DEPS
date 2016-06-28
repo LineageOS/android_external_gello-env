@@ -44,7 +44,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '3bddbe16923d16ec5df49031827277e31587dec3',
+  'v8_revision': 'f56c0733c8d2f854f803c94ca27ecca66458a6a9',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -166,7 +166,7 @@ deps = {
    Var('chromium_git') + '/external/swarming.client.git' + '@' +  Var('swarming_revision'),
 
   'src/v8':
-    Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
+    Var('webtech_devx_url') + '/v8.git' + '@' +  Var('v8_revision'),
 
   'src/native_client':
    Var('chromium_git') + '/native_client/src/native_client.git' + '@' + Var('nacl_revision'),
