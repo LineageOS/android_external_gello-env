@@ -22,6 +22,30 @@
       "revId": "7877f3b9c5148965fa1ab6f14d970650b761d21d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_13a41608",
+        "filename": "swe/channels/cm/branding/BRANDING",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 848
+      },
+      "writtenOn": "2016-06-28T23:46:42Z",
+      "side": 1,
+      "message": "The CyanogenMod Project or CyanogenMod LLC (as it is legally registered).",
+      "parentUuid": "3fa7e38b_185bd587",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "7877f3b9c5148965fa1ab6f14d970650b761d21d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
