@@ -24,6 +24,7 @@ import android.view.Window;
 import android.widget.RemoteViews;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
@@ -259,8 +260,9 @@ public class CustomTabActivity extends ChromeActivity {
         } else {
             mMainTab = createMainTab();
         }
-        getTabModelSelector().getModel(false).addObserver(mTabModelObserver);
-        getTabModelSelector().getModel(false).addTab(mMainTab, 0, mMainTab.getLaunchType());
+        boolean incognito = CommandLine.getInstance().hasSwitch(ChromeSwitches.INCOGNITO_ONLY_MODE);
+        getTabModelSelector().getModel(incognito).addObserver(mTabModelObserver);
+        getTabModelSelector().getModel(incognito).addTab(mMainTab, 0, mMainTab.getLaunchType());
 
         ToolbarControlContainer controlContainer = (ToolbarControlContainer) findViewById(
                 R.id.control_container);
@@ -364,8 +366,9 @@ public class CustomTabActivity extends ChromeActivity {
             Referrer referrer = customTabsConnection.getReferrerForSession(mSession);
             if (referrer != null) referrerUrl = referrer.getUrl();
         }
+        boolean incognito = CommandLine.getInstance().hasSwitch(ChromeSwitches.INCOGNITO_ONLY_MODE);
         Tab tab = new Tab(TabIdManager.getInstance().generateValidId(Tab.INVALID_TAB_ID),
-                Tab.INVALID_TAB_ID, false, this, getWindowAndroid(),
+                Tab.INVALID_TAB_ID, incognito, this, getWindowAndroid(),
                 TabLaunchType.FROM_EXTERNAL_APP, null, null);
         tab.setAppAssociatedWith(customTabsConnection.getClientPackageNameForSession(mSession));
 
@@ -379,7 +382,7 @@ public class CustomTabActivity extends ChromeActivity {
             if (webContents != null) mShouldReplaceCurrentEntry = true;
         }
         if (webContents == null) {
-            webContents = WebContentsFactory.createWebContents(false, false);
+            webContents = WebContentsFactory.createWebContents(incognito, false);
         }
         tab.initialize(webContents, getTabContentManager(),
                 new CustomTabDelegateFactory(mIntentDataProvider.shouldEnableUrlBarHiding()), false,

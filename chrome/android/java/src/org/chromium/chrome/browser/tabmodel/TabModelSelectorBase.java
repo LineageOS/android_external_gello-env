@@ -4,7 +4,9 @@
 
 package org.chromium.chrome.browser.tabmodel;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ObserverList;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
@@ -38,7 +40,9 @@ public abstract class TabModelSelectorBase implements TabModelSelector {
         for (int i = 0; i < models.length; i++) {
             tabModels.add(models[i]);
         }
-        mActiveModelIndex = startIncognito ? INCOGNITO_TAB_MODEL_INDEX : NORMAL_TAB_MODEL_INDEX;
+        mActiveModelIndex = startIncognito ||
+                CommandLine.getInstance().hasSwitch(ChromeSwitches.INCOGNITO_ONLY_MODE)
+                ? INCOGNITO_TAB_MODEL_INDEX : NORMAL_TAB_MODEL_INDEX;
         mTabModels = Collections.unmodifiableList(tabModels);
 
         TabModelObserver tabModelObserver = new EmptyTabModelObserver() {
