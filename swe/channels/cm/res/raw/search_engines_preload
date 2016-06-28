@@ -1,0 +1,51 @@
+{
+	"version": "1.0",
+	"default": 0,
+	"searchEngines":
+	[
+		{
+			"name": "Google (encrypted)",
+			"keyword": "encrypted.google.com",
+			"faviconUrl": "https://encrypted.google.com/favicon.ico",
+			"searchUrl": "https://encrypted.google.com/search?ie={inputEncoding}&amp;source=android-browser&amp;q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "https://encrypted.google.com/complete/search?client=android&amp;q={searchTerms}"
+		},
+		{
+			"name": "Baidu",
+			"keyword": "baidu.com",
+			"faviconUrl": "http://www.baidu.com/favicon.ico",
+			"searchUrl": "http://www.baidu.com/s?wd={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "Bing",
+			"keyword": "bing.com",
+			"faviconUrl": "http://www.bing.com/s/wlflag.ico",
+			"partnerCodeKey": "search_code_bing",
+			"defaultPartnerCode": "CY01",
+			"searchUrl": "http://www.bing.com/search?FORM=CYANDF&PC={partnerCode}&q={searchTerms}",
+			"encoding": "UTF-8",
+			"suggestUri": "http://api.bing.com/osjson.aspx?FORM=CYANDF&PC={partnerCode}&query={searchTerms}&language={language}"
+		},
+		{
+			"name": "DuckDuckGo",
+			"keyword": "duckduckgo.com",
+			"faviconUrl": "http://duckduckgo.com/favicon.ico",
+			"searchUrl": "https://duckduckgo.com/?q={searchTerms}&t=cyanogenmod",
+			"encoding": "UTF-8",
+			"suggestUri": ""
+		},
+		{
+			"name": "Yahoo!",
+			"keyword": "yahoo.com",
+			"faviconUrl": "http://search.yahoo.com/favicon.ico",
+			"partnerCodeKey": "search_code_yahoo",
+			"defaultPartnerCode": "cya_oem",
+			"searchUrl": "http://search.yahoo.com/mobile/s?p={searchTerms}&.tsrc={partnerCode}",
+			"encoding": "UTF-8",
+			"suggestUri": "https://search.yahoo.com/gossip?output=fxjson&command={searchTerms}&.tsrc={partnerCode}"
+		}
+	]
+}

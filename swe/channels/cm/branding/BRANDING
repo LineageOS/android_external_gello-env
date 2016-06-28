@@ -1,0 +1,11 @@
+COMPANY_FULLNAME=CyanogenMod
+COMPANY_SHORTNAME=CM
+PRODUCT_FULLNAME=CyanogenMod
+PRODUCT_SHORTNAME=C;
+PRODUCT_INSTALLER_FULLNAME=CyanogenMod Installer
+PRODUCT_INSTALLER_SHORTNAME=CyanogenMod Installer
+COPYRIGHT=Copyright (c) 2016 CyanogenMod, Inc.
+PACKAGE_NAME=org.cyanogenmod.gello.browser.dev
+APK_LABEL=@string/application_name
+APK_AUTHORITIES=cyanogenmod.gello.browser.dev
+APP_AUTHORITIES=org.cyanogenmod.gello.browser.dev
