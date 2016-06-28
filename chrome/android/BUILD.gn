@@ -371,8 +371,7 @@ android_library("chrome_test_java") {
 # Overrides icon / name defined in chrome_java_resources.
 android_resources("chrome_public_apk_resources") {
   resource_dirs = ["java/res_chromium"]
-  generated_resource_dirs = swe_extra_dirs
-  generated_resource_files = []
+  resource_extra_dir = swe_extra_dirs
   # Dep needed to ensure override works properly.
   deps = [
     ":chrome_java_resources",
