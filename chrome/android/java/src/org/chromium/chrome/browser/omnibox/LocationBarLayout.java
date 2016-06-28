@@ -830,23 +830,20 @@ public class LocationBarLayout extends FrameLayout implements OnClickListener,
         mLocationBarIconActiveAnimator.start();
     }
 
-/* DISABLED_BY_UPLEVEL
-//@Override
-//public void onUrlPreFocusChanged(boolean gainFocus) {
-
-    // This code needs to find a new home/trigger.  The old one was removed.
-    if (mSecurityIconType == ConnectionSecurityLevel.SECURE ||
-            mSecurityIconType == ConnectionSecurityLevel.EV_SECURE) {
-        if (!gainFocus) {
-            String title = mToolbarDataProvider.getTab().getTitle();
-            if (!TextUtils.isEmpty(title))
-                mUrlBar.setText(title, TextView.BufferType.EDITABLE);
-        } else {
-            mUrlBar.setUrl(mToolbarDataProvider.getTab().getUrl(), null);
+    @Override
+    public void onUrlPreFocusChanged(boolean gainFocus) {
+        if (mSecurityIconType == ConnectionSecurityLevel.SECURE ||
+                mSecurityIconType == ConnectionSecurityLevel.EV_SECURE) {
+            if (!gainFocus) {
+                String title = mToolbarDataProvider.getTab().getTitle();
+                if (!TextUtils.isEmpty(title))
+                    mUrlBar.setText(title, TextView.BufferType.EDITABLE);
+            } else {
+                mUrlBar.setUrl(mToolbarDataProvider.getTab().getUrl(), null);
+            }
         }
     }
-//}
-*/
+
 
     @Override
     public void setUrlBarFocus(boolean shouldBeFocused) {
