@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_eece3082",
+        "filename": "swe/tools/swe_version.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 9621
+      },
+      "writtenOn": "2016-06-30T22:09:09Z",
+      "side": 1,
+      "message": "just remove the email restriction and let\u0027s submit as is so any commit triggers a new version.",
+      "revId": "a79ec08b08074c224198d8d32f27a17f210a353d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
