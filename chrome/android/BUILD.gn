@@ -451,6 +451,15 @@ shared_library("swe") {
     deps += [ "//tools/cygprofile" ]
   }
 
+  if (is_android &&
+    exec_script("//build/dir_exists.py",
+      [ rebase_path("//swe/swe_core", root_build_dir) ],
+      "string") == "True") {
+      # swe_core directory exists
+      defines = [ "CALL_SWE_CORE" ]
+      deps += [ "//swe/swe_core:swe_core_native", ]
+  }
+
   public_configs = extra_chrome_shared_library_configs
 }
 
