@@ -173,7 +173,7 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
         final Context context = getActivity();
         return SpanApplier.applySpans(
                 context.getString(R.string.sync_passphrase_reset_instructions),
-                new SpanInfo("<resetlink>", "</resetlink>", new ClickableSpan() {
+                new SpanInfo("<link>", "</link>", new ClickableSpan() {
                     @Override
                     public void onClick(View view) {
                         recordPassphraseDialogDismissal(PASSPHRASE_DIALOG_RESET_LINK);
