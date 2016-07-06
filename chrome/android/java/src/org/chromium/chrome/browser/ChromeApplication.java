@@ -8,11 +8,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -106,9 +108,13 @@ import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.ResourceBundle;
 import org.codeaurora.swe.SWECommandLine;
+import org.cyanogenmod.PartnerUtil;
+import org.cyanogenmod.SysPropUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Basic application functionality that should be shared among all browser applications that use
@@ -583,7 +589,53 @@ public class ChromeApplication extends ContentApplication {
      * @return The user agent string of Chrome.
      */
     public static String getBrowserUserAgent() {
-        return nativeGetBrowserUserAgent();
+        String originalUserAgent = nativeGetBrowserUserAgent();
+        String overrideUserAgent = PartnerUtil.getSyspropUserAgentOverride();
+        // If we have an override user agent set
+        if (!TextUtils.isEmpty(overrideUserAgent)) {
+            // First extract the versions
+            String webkitVersion = parseAppleWebKitVersion(originalUserAgent);
+            String chromeVersion = parseChromeVersion(originalUserAgent);
+
+            // Set the override
+            originalUserAgent = overrideUserAgent;
+
+            // Set the versions
+            originalUserAgent = originalUserAgent.replaceAll("<%build_model>", Build.MODEL);
+            originalUserAgent = originalUserAgent.replaceAll("<%build_version>",
+                    Build.VERSION.RELEASE);
+            originalUserAgent = originalUserAgent.replaceAll("<%build_id>", Build.ID);
+            originalUserAgent = originalUserAgent.replaceAll("<%language>",
+                    Locale.getDefault().getLanguage());
+            originalUserAgent = originalUserAgent.replaceAll("<%country>",
+                    Locale.getDefault().getCountry());
+            originalUserAgent = originalUserAgent.replaceAll("<%apple_webkit_version>",
+                    webkitVersion);
+            originalUserAgent = originalUserAgent.replaceAll("<%chrome_version>", chromeVersion);
+            // Use apple webkit version, was having trouble parsing, plus is the same 99% of time.
+            originalUserAgent = originalUserAgent.replaceAll("<%safari_version>", webkitVersion);
+        }
+
+        return originalUserAgent;
+    }
+
+    private static String parseAppleWebKitVersion(String userAgent) {
+        Pattern pattern = Pattern.compile("AppleWebKit/(.*?) ");
+        Matcher m = pattern.matcher(userAgent);
+        if (m.find()) {
+            return m.group(1);
+        }
+        return "UNKNOWN";
+
+    }
+
+    private static String parseChromeVersion(String userAgent) {
+        Pattern pattern = Pattern.compile("Chrome/(.*?) ");
+        Matcher m = pattern.matcher(userAgent);
+        if (m.find()) {
+            return m.group(1);
+        }
+        return "UNKNOWN";
     }
 
     /**
