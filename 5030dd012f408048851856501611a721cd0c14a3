@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_bf2ff9f4",
+        "filename": "chrome/android/java/src/org/cyanogenmod/PartnerUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 13408
+      },
+      "writtenOn": "2016-07-06T20:22:39Z",
+      "side": 1,
+      "message": "false?",
+      "revId": "5030dd012f408048851856501611a721cd0c14a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
