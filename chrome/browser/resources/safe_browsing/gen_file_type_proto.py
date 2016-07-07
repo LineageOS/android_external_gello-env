@@ -173,7 +173,7 @@ def main():
 
   if opts.wrap:
     # Run this script again with different args to the interpreter.
-    command = [sys.executable, '-S', '-s', sys.argv[0]]
+    command = [sys.executable, '-s', sys.argv[0]]
     command += ['-t', opts.type]
     command += ['-i', opts.infile]
     command += ['-o', opts.outfile]
