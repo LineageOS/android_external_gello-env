@@ -313,11 +313,6 @@ public abstract class BrowserChromeActivity extends AsyncInitializationActivity 
         final Tab currentTab = getActivityTab();
         if (currentTab == null) {
             return false;
-        } else if (id == R.id.info_menu_id) {
-            if (currentTab.isOfflinePage()) {
-                ToolbarFavicon.showOfflinePageDialog(this, currentTab);
-                return true;
-            }
         } else if (id == R.id.about_id) {
             Intent preferencesIntent = PreferencesLauncher.createIntentForSettingsPage(
                     this, AboutChromePreferences.class.getName());
