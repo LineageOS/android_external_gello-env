@@ -670,10 +670,6 @@ public class CustomTabActivity extends ChromeActivity {
                 RecordUserAction.record("MobileShortcutFindInPage");
             }
             return true;
-        } else if (id == R.id.info_menu_id) {
-            WebsiteSettingsPopup.show(this, getTabModelSelector().getCurrentTab(),
-                    getToolbarManager().getContentPublisher());
-            return true;
         }
         return super.onMenuOrKeyboardAction(id, fromMenu);
     }

@@ -110,16 +110,18 @@ public class AppMenuPropertiesDelegate {
 
             menu.findItem(R.id.update_menu_id).setVisible(
                     UpdateMenuItemHelper.getInstance().shouldShowMenuItem(mActivity));
+            menu.findItem(R.id.about_id).setVisible(false);
 
             menu.findItem(R.id.move_to_other_window_menu_id).setVisible(
                     MultiWindowUtils.getInstance().isOpenInOtherWindowSupported(mActivity));
 
             // Hide "Recent tabs" in incognito mode or when sync can't be enabled.
             MenuItem recentTabsMenuItem = menu.findItem(R.id.recent_tabs_menu_id);
-            recentTabsMenuItem.setVisible(!isIncognito && FeatureUtilities.canAllowSync(mActivity));
+            recentTabsMenuItem.setVisible(false);
             recentTabsMenuItem.setTitle(R.string.menu_recent_tabs);
 
             MenuItem allBookmarksMenuItem = menu.findItem(R.id.all_bookmarks_menu_id);
+            allBookmarksMenuItem.setVisible(false);
             allBookmarksMenuItem.setTitle(mActivity.getString(R.string.menu_bookmarks));
 
             // Don't allow "chrome://" pages to be shared.

@@ -1555,8 +1555,6 @@ public abstract class ChromeActivity extends BrowserChromeActivity
                 currentTab.reload();
                 RecordUserAction.record("MobileToolbarReload");
             }
-        } else if (id == R.id.info_menu_id) {
-            WebsiteSettingsPopup.show(this, currentTab, null);
         } else if (id == R.id.open_history_menu_id) {
             currentTab.loadUrl(
                     new LoadUrlParams(UrlConstants.HISTORY_URL, PageTransition.AUTO_TOPLEVEL));
