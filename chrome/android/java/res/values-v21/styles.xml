@@ -7,7 +7,7 @@
     <!-- Preferences -->
     <style name="PreferencesTheme" parent="ThemeWithActionBar">
         <item name="android:listDivider">@null</item>
-        <item name="android:textColorLink">@color/pref_accent_color</item>
+        <item name="android:textColorLink">@color/cm_accent</item>
         <item name="android:preferenceCategoryStyle">@style/SWEPreferenceCategory</item>
         <item name="android:alertDialogTheme">@style/PreferencesDialogTheme</item>
         <item name="android:divider">@null</item>
@@ -21,7 +21,7 @@
         <item name="android:layout">@layout/browser_preference_category</item>
     </style>
     <style name="PreferencesDialogTheme" parent="@android:style/Theme.Material.Light.Dialog.Alert">
-        <item name="android:colorAccent">@color/pref_accent_color</item>
+        <item name="android:colorAccent">@color/cm_accent</item>
     </style>
     <style name="PreferenceCategoryWithButtonStyle">
         <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
@@ -29,7 +29,7 @@
     </style>
     <style name="PreferenceCategoryTextStyle">
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/pref_accent_color</item>
+        <item name="android:textColor">@color/cm_accent</item>
         <item name="android:textSize">14sp</item>
     </style>
     <style name="PreferenceTitle">

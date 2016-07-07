@@ -51,7 +51,7 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="15sp"
-            chrome:buttonColor="@color/light_active_color" />
+            chrome:buttonColor="@color/cm_accent" />
     </LinearLayout>
 
 </org.chromium.chrome.browser.signin.SigninAndSyncView>

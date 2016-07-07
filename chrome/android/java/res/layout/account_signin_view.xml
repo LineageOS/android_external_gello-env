@@ -32,7 +32,7 @@
                 android:orientation="vertical">
 
                 <!-- The layout_width/layout_height is set to 16/9 dynamically in Java -->
-                <TextView 
+                <TextView
                     android:id="@+id/signin_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,13 +45,13 @@
                     android:textSize="@dimen/fre_title_text_size"
                     android:text="@string/sign_in_to_chrome"/>
 
-                <View 
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/signin_border_line_color"
                     android:alpha="0.08"/>
 
-                <TextView 
+                <TextView
                     android:id="@+id/signin_choice_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
             android:layout_height="36dp"
             android:text="@string/fre_skip_text"
             android:textAllCaps="true"
-            android:textColor="@color/light_active_color"
+            android:textColor="@color/cm_accent"
             android:textSize="14sp"/>
 
         <View
@@ -245,7 +245,7 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            chrome:buttonColor="@color/light_active_color"/>
+            chrome:buttonColor="@color/cm_accent"/>
 
         <View
             android:id="@+id/positive_button_end_padding"

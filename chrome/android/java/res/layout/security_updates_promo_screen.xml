@@ -137,7 +137,7 @@
                     android:text="@string/ok"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/browser_promo_button_text_size"
-                    chrome:buttonColor="@color/light_active_color" />
+                    chrome:buttonColor="@color/cm_accent" />
              </LinearLayout>
          </LinearLayout>
 

@@ -41,7 +41,7 @@
                 android:text="@string/physical_web_optin_description"
                 android:textSize="16sp"
                 android:textColor="@color/light_normal_color"
-                android:textColorLink="@color/light_active_color" />
+                android:textColorLink="@color/cm_accent" />
 
         </LinearLayout>
 

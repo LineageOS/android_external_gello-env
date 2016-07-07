@@ -15,4 +15,8 @@
 <resources>
     <color name="icon_white">#DADADA</color>
     <color name="icon_black">#5A5A5A</color>
+
+    <color name="cm_primary">#263238</color>
+    <color name="cm_primaryDark">#161E21</color>
+    <color name="cm_accent">@color/google_blue_700</color>
 </resources>

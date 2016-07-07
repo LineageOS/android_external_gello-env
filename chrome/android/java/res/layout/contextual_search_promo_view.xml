@@ -46,7 +46,7 @@
         android:textAllCaps="true"
         android:textColor="#FFF"
         android:textSize="14sp"
-        chrome:buttonColor="@color/light_active_color" />
+        chrome:buttonColor="@color/cm_accent" />
 
     <Button
         android:id="@+id/contextual_search_no_thanks_button"
@@ -62,7 +62,7 @@
         android:paddingEnd="8dp"
         android:text="@string/contextual_search_no_thanks_button"
         android:textAllCaps="true"
-        android:textColor="@color/light_active_color"
+        android:textColor="@color/cm_accent"
         android:textSize="14sp"
         style="@style/ButtonCompatBorderless" />
 
