@@ -8,12 +8,12 @@
     <color name="default_text_color">#333</color>
     <color name="default_primary_color">#ffff</color>
     <color name="light_normal_color">#5A5A5A</color>
-    <color name="light_active_color">@color/accent</color>
+    <color name="light_active_color">@color/icon_black</color>
     <color name="input_underline_color">#e5e5e5</color>
     <color name="input_underline_error_color">#d32f2f</color>
     <color name="explanation_text_color">#909090</color>
     <color name="text_highlight_color">#C6DAFC</color>
-    <color name="dark_action_bar_color">@color/accent</color>
+    <color name="dark_action_bar_color">@color/cm_accent</color>
     <color name="descriptive_text_color">#646464</color>
     <color name="error_text_color">#c53929</color>
     <color name="google_blue_700">#3367d6</color>
@@ -28,7 +28,7 @@
     <!-- Tab Switcher Colors -->
     <color name="tab_switcher_background">#14181C</color>
     <color name="accessibility_tab_switcher_list_item">#252525</color>
-    <color name="accessibility_close_undo_text">#3adaff</color>
+    <color name="accessibility_close_undo_text">@color/cm_accent</color>
     <color name="tab_back">#F1F1F1</color>
     <color name="tab_back_incognito">#4F4F4F</color>
 
@@ -64,7 +64,7 @@
     <color name="password_generation_divider_color">#e5e5e5</color>
 
     <!-- Preferences Colors -->
-    <color name="pref_accent_color">@color/light_active_color</color>
+    <color name="pref_accent_color">@color/cm_accent</color>
     <color name="expandable_group_dark_gray">#484848</color>
 
     <!-- Data Saver Colors -->
@@ -116,7 +116,7 @@
     <color name="contextual_search_promo_border_color">#C2C2C2</color>
 
     <!-- Progress Bar colors -->
-    <color name="progress_bar_foreground">@color/light_active_color</color>
+    <color name="progress_bar_foreground">@color/cm_accent</color>
     <color name="progress_bar_foreground_white">@android:color/white</color>
     <color name="progress_bar_background">#3d4386f7</color>
     <color name="progress_bar_background_white">#4d000000</color>
@@ -185,7 +185,7 @@
     <color name="TileBadgeTextUnknown">#333</color>
     <color name="TileBadgeTextVerified">#fff</color>
 
-    <color name="accent">#FF1AACA2</color>
+    <color name="accent">@color/cm_accent</color>
 
     <color name="smart_protect">#FFAA232A</color>
 

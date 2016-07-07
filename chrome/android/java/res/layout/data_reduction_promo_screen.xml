@@ -101,10 +101,10 @@
                     android:text="@string/data_reduction_enable_button"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/data_reduction_promo_button_text_size"
-                    chrome:buttonColor="@color/light_active_color" />
+                    chrome:buttonColor="@color/cm_accent" />
              </LinearLayout>
          </LinearLayout>
-         
+
          <org.chromium.chrome.browser.widget.TintedImageButton
             android:id="@+id/close_button"
             android:layout_height="56dp"
@@ -114,6 +114,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/close"
             android:src="@drawable/btn_close" />
-            
+
     </RelativeLayout>
 </org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoView>
