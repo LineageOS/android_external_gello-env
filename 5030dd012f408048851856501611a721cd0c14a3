@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fa7e38b_eaeff1ad",
+        "filename": "chrome/android/java/src/org/cyanogenmod/PartnerUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 10631
+      },
+      "writtenOn": "2016-07-07T13:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa7e38b_bf2ff9f4",
+      "revId": "5030dd012f408048851856501611a721cd0c14a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa7e38b_df4755bc",
         "filename": "chrome/android/java/src/org/cyanogenmod/PartnerUtil.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-07-06T20:30:06Z",
       "side": 1,
       "message": "Is this used anywhere? Let\u0027s remove it if not since this comes from the external provider now.",
+      "revId": "5030dd012f408048851856501611a721cd0c14a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_8a2afde4",
+        "filename": "chrome/android/java/src/org/cyanogenmod/PartnerUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 10631
+      },
+      "writtenOn": "2016-07-07T13:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa7e38b_df4755bc",
       "revId": "5030dd012f408048851856501611a721cd0c14a3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
