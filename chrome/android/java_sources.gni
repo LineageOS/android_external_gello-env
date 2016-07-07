@@ -978,6 +978,8 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/widget/findinpage/FindToolbarTablet.java",
   "java/src/org/chromium/chrome/browser/widget/incognitotoggle/IncognitoToggleButtonTablet.java",
   "java/src/org/chromium/chrome/browser/widget/newtab/NewTabButton.java",
+
+  "java/src/org/cyanogenmod/PartnerUtil.java",
 ]
 
 chrome_test_java_sources = [

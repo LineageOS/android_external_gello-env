@@ -128,6 +128,7 @@ public class CustomTabsConnection extends ICustomTabsService.Stub {
         if (sInstance.get() == null) {
             ChromeApplication chromeApplication = (ChromeApplication) application;
             chromeApplication.initCommandLine();
+            chromeApplication.setExtraUAProfUrl(application.getContentResolver());
             sInstance.compareAndSet(null, chromeApplication.createCustomTabsConnection());
         }
         return sInstance.get();
