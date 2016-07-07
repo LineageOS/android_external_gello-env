@@ -5,9 +5,12 @@
 package org.chromium.chrome.browser;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -107,9 +110,9 @@ import org.chromium.sync.signin.SystemAccountManagerDelegate;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.ResourceBundle;
+import org.codeaurora.swe.SWEBrowserSwitches;
 import org.codeaurora.swe.SWECommandLine;
 import org.cyanogenmod.PartnerUtil;
-import org.cyanogenmod.SysPropUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
@@ -511,6 +514,29 @@ public class ChromeApplication extends ContentApplication {
 
         // SWE specific command line switches
         SWECommandLine.getInstance(this).initSWECommandLine();
+    }
+
+    public void setExtraUAProfUrl(ContentResolver contentResolver) {
+        // Example: header = "X_WAP_PROFILE:http://www-ccpp.tcl-ta.com/files/6039A.xml";
+        Uri urlUri = Uri.parse("content://" + getPackageName() + "/uaprofurl");
+        String headerName = "X_WAP_PROFILE";
+        Cursor c = null;
+        try {
+            c = contentResolver.query(urlUri, null, null, null, null);
+        } catch (UnsupportedOperationException e) {
+            Log.e(TAG, "Failed to get UA Prof URL");
+        }
+
+        String header = null;
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            String url = c.getString(0);
+            header = String.format("%s:%s", headerName, url);
+        }
+        if (!TextUtils.isEmpty(header)) {
+            CommandLine.getInstance().appendSwitchWithValue(
+                    SWEBrowserSwitches.HTTP_HEADERS, header);
+        }
     }
 
     /**
