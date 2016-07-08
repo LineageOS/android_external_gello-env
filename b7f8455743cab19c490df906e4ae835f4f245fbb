@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_8bbbdfe3",
+        "filename": "chrome/android/java/src/org/codeaurora/swe/PartnerUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 80
+      },
+      "writtenOn": "2016-07-08T12:08:23Z",
+      "side": 1,
+      "message": "ugh, my tree got derped",
+      "revId": "b7f8455743cab19c490df906e4ae835f4f245fbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_ebecd3f4",
+        "filename": "chrome/browser/resources/safe_browsing/gen_file_type_proto.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 80
+      },
+      "writtenOn": "2016-07-08T12:08:23Z",
+      "side": 1,
+      "message": "This fixes build issues when building in a virtual env.  I didn\u0027t meant to commit it. (unless someone else thinks it is useful? e.g. jenkins maybe?)",
+      "revId": "b7f8455743cab19c490df906e4ae835f4f245fbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
