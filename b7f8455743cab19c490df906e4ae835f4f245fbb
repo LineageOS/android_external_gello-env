@@ -33,6 +33,24 @@
       "revId": "b7f8455743cab19c490df906e4ae835f4f245fbb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_ebc5b35c",
+        "filename": "chrome/browser/resources/safe_browsing/gen_file_type_proto.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2016-07-08T12:41:41Z",
+      "side": 1,
+      "message": "This is needed for me as well",
+      "parentUuid": "3fa7e38b_ebecd3f4",
+      "revId": "b7f8455743cab19c490df906e4ae835f4f245fbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
