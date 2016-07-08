@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_0bd04ff7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 9621
+      },
+      "writtenOn": "2016-07-08T14:40:28Z",
+      "side": 1,
+      "message": "Should this dynamically figure out the package name like the other partnercustomizations (I think?) does this?",
+      "revId": "86c7b578020aae3079bf7249e9527ee78357cc04",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
