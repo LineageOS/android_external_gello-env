@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_c71ea36f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 9621
+      },
+      "writtenOn": "2016-07-11T20:15:14Z",
+      "side": 1,
+      "message": "can we use getPackageName() here to build this url? That\u0027s how it\u0027s built in PartnerBrowserCustomizations. Or are we hardcoding because this uri path is only available in com.cyngn.browser?",
+      "revId": "82adee9eeed7e6149afbf90a995947543e1acf41",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
